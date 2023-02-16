@@ -8,6 +8,12 @@ import android.os.BatteryManager;
 import android.os.PowerManager;
 import android.os.PowerManager.OnThermalStatusChangedListener;
 import android.hardware.BatteryState;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.hardware.SensorAdditionalInfo;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -18,9 +24,9 @@ public class Battery {
     Context context;
     PowerManager power_manager;
     Duration battery_life_prediction;
-    BatterState batterState;
+    BatteryState batterState;
     {
-        assert context != null;
+        assert false;
         power_manager = (PowerManager) context.getApplicationContext().getSystemService(Context.POWER_SERVICE);
     }
 
@@ -67,5 +73,40 @@ public class Battery {
         long battery_remaining_charge = _battery_manager.computeChargeTimeRemaining();
         ApplicationErrorReport.BatteryInfo info = new ApplicationErrorReport.BatteryInfo();
         info.
+    }
+    public static  class Cpu {
+        public Cpu()
+        {
+
+        }
+
+        /**
+         *
+         * @param opening_time is the time that the
+         * device's cpu was open since booting
+         */
+        public Cpu(long opening_time){
+
+        }
+        public static String cpu_info()
+        {
+            return null;
+        }
+        public double get_cpu_temperature()
+        {
+
+        }
+        public double get_cpu_frequency()
+        {
+
+        }
+    }
+    public interface TemperatureListener
+    {
+
+    }
+    enum TEMP_SCALE{
+        CELCIUS,
+        FAHRENHEIT
     }
 }

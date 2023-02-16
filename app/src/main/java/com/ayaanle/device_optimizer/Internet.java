@@ -2,6 +2,7 @@ package com.ayaanle.device_optimizer;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Network;
@@ -29,6 +30,7 @@ public class Internet {
     int ip;
     float frequency;
     String mac_address, bssid, ip_address;
+    @SuppressLint("HardwareIds")
     @RequiresApi(api = Build.VERSION_CODES.Q)
     public WifiInfo wifi_info(Context context) {
 
@@ -37,7 +39,8 @@ public class Internet {
             _wifi_info = wifi_manager.getConnectionInfo()
             ip = _wifi_info.getIpAddress();
             frequency = _wifi_info.getFrequency();
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(context.getApplicationContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding

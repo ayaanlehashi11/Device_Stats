@@ -1,5 +1,6 @@
 package com.ayaanle.device_optimizer;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
@@ -45,7 +46,11 @@ public class Disk {
             }
         }
         else if(Environment.isExternalStorageRemovable()){
-            Toast.makeText(this , "the external storage is emulated" , Toast.LENGTH_SHORT);
+            Toast.makeText(context.getApplicationContext(), "the external storage is emulated" , Toast.LENGTH_SHORT).show();
         }
+    }
+    public AlertDialog DiskDialog()
+    {
+        return new AlertDialog();
     }
 }

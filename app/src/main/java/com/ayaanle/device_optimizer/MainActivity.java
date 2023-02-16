@@ -1,5 +1,6 @@
 package com.ayaanle.device_optimizer;
 
+import android.app.AlertDialog;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -25,14 +26,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-
+    AlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setSupportActionBar(binding.toolbar);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
