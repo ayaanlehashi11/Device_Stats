@@ -21,12 +21,17 @@ import com.ayaanle.device_optimizer.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     AlertDialog dialog;
+    ImageButton imgbtn1;
+    ImageButton imgbtn2;
+    ImageButton imgbtn3;
+    ImageButton imgbtn4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +49,33 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+        imgbtn1 = (ImageButton) findViewById(R.id.imageButton);
+        imgbtn2 = (ImageButton) findViewById(R.id.imageButton2);
+        imgbtn3 = (ImageButton) findViewById(R.id.imageButton3);
+        imgbtn4 = (ImageButton) findViewById(R.id.imageButton4);
+        imgbtn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        imgbtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+        imgbtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        imgbtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
