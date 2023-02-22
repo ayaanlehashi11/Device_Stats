@@ -37,11 +37,11 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
+        android:layout_width="128dp"
+        android:layout_height="109dp"
         android:layout_marginLeft="30dp"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:layout_marginTop="180dp"
+        app:srcCompat="@drawable/internet" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
         android:layout_marginLeft="230dp"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@drawable/ic_baseline_battery_full_24" />
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="330dp"
         android:layout_marginLeft="230dp"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@drawable/disk" />
 
     <ImageButton
         android:id="@+id/imageButton4"
@@ -65,6 +65,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="330dp"
         android:layout_marginLeft="30dp"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@drawable/optimizer" />
 
 </androidx.cardview.widget.CardView>
