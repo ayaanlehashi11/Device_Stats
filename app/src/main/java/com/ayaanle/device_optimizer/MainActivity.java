@@ -22,6 +22,8 @@ import com.ayaanle.device_optimizer.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
+        Toolbar tool_bar = (Toolbar)findViewById(R.id.toolbar);
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,24 +63,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             }
         });
-        imgbtn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-        imgbtn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        imgbtn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        imgbtn3.setOnClickListener(view ->
+                Toast.makeText(getApplicationContext() , "disk" , Toast.LENGTH_SHORT).show());
+        imgbtn2.setOnClickListener(view ->
+                Toast.makeText(getApplicationContext() , "battery" , Toast.LENGTH_SHORT).show());
+        imgbtn1.setOnClickListener(view ->
+                Toast.makeText(getApplicationContext() , "Wifi" , Toast.LENGTH_SHORT).show());
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
