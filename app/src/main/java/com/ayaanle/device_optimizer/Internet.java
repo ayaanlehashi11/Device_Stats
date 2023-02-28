@@ -3,9 +3,13 @@ package com.ayaanle.device_optimizer;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Network;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.RouteInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -29,7 +33,9 @@ public class Internet {
     WifiManager wifi_manager;
     int ip;
     float frequency;
+    WifiInfo wifi_info;
     String mac_address, bssid, ip_address;
+    WifiManager wifiManager;
     @SuppressLint("HardwareIds")
     @RequiresApi(api = Build.VERSION_CODES.Q)
     public WifiInfo wifi_info(Context context) {
@@ -90,7 +96,16 @@ public class Internet {
     @RequiresApi(api = Build.VERSION_CODES.R)
     public InetAddress getDhcpServerAddress(RouteInfo _route_info)
     {
-        List<InetAddress> dhcp_Address = link_properties.getDhcpServerAddress()
+        List<InetAddress> dhcp_Address = link_properties.getDhcpServerAddress();
+    }
+    public WifiInfo wifi_info()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if(wifi_info.getCurrentSecurityType() == WifiInfo.SECURITY_TYPE_WEP &&
+                    wifi_info.getCurrentSecurityType() != WifiInfo.SECURITY_TYPE_OPEN) {
+
+            }
+        }
     }
 }
 
