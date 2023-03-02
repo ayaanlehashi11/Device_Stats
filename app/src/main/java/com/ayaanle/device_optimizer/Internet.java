@@ -3,19 +3,19 @@ package com.ayaanle.device_optimizer;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Network;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.RouteInfo;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiNetworkSuggestion;
 import android.os.Build;
+import android.telephony.CellInfo;
+import android.telephony.SignalStrength;
+import android.telephony.TelephonyManager;
 import android.net.LinkProperties;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -23,7 +23,7 @@ import androidx.core.app.ActivityCompat;
 import java.net.InetAddress;
 import java.util.List;
 
-
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
 public class Internet {
     LinkProperties link_properties = link_properties = new LinkProperties();
 
@@ -35,10 +35,16 @@ public class Internet {
     float frequency;
     WifiInfo wifi_info;
     String mac_address, bssid, ip_address;
+    String sim_operator_name;
+    String sim_number , sim_country , strphoneType;
+    int sim_id;
+    SignalStrength signalStrength;
     WifiManager wifiManager;
+    Context context;
+
     @SuppressLint("HardwareIds")
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    public WifiInfo wifi_info(Context context) {
+    public WifiInfo wifi_info() {
 
         wifi_manager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (wifi_manager.isWifiEnabled()) {
@@ -62,26 +68,54 @@ public class Internet {
         }
 
     }
-    public int WifiSuggestionFunc()
-    {
+
+    public int WifiSuggestionFunc() {
         WifiNetworkSuggestion wifi_suggestion = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if(wifi_suggestion.isMetered())
-            {
+            if (wifi_suggestion.isMetered()) {
 
             }
         }
     }
-    public void dns_selection()
-    {
+
+    public void dns_selection() {
         List<InetAddress> dns_addresses = link_properties.getDnsServers();
-        for(int i = 0; i < dns_addresses.size();++i)
-        {
-            if(dns_addresses.get(i).isAnyLocalAddress() && dns_addresses.get(i).isMulticastAddress())
-            {
+        for (int i = 0; i < dns_addresses.size(); ++i) {
+            if (dns_addresses.get(i).isAnyLocalAddress() && dns_addresses.get(i).isMulticastAddress()) {
                 dns_addresses.get(i).getHostAddress();
             }
         }
+    }
+
+    String Cell_Resol(TelephonyManager telephonyManager, CellInfo cellInfo) {
+        telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (telephonyManager.isDataEnabled()) {
+                    sim_country = telephonyManager.getSimCountryIso();
+                    sim_operator_name = telephonyManager.getSimOperatorName();
+                }
+                else Toast.makeText(context.getApplicationContext() , "Data is not enabled" , Toast.LENGTH_SHORT).show();
+            }
+        else
+        {
+            Toast.makeText(context.getApplicationContext() , "Telephony Permission isn't enabled" , Toast.LENGTH_SHORT).show();
+        }
+        int phoneType=telephonyManager.getPhoneType();
+
+        switch (phoneType)
+        {
+            case (TelephonyManager.PHONE_TYPE_CDMA):
+                strphoneType="CDMA";
+                break;
+            case (TelephonyManager.PHONE_TYPE_GSM):
+                strphoneType="GSM";
+                break;
+            case (TelephonyManager.PHONE_TYPE_NONE):
+                strphoneType="NONE";
+                break;
+        }
+        return "Null";
     }
     public void static_ipconfig()
     {

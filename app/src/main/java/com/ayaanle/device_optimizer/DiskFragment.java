@@ -1,5 +1,6 @@
 package com.ayaanle.device_optimizer;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.ayaanle.device_optimizer.databinding.FragmentSecondBinding;
 
 public class DiskFragment extends Fragment {
-
+    Disk disk = new Disk();
     private FragmentSecondBinding binding;
 
     @Override
@@ -28,7 +29,9 @@ public class DiskFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            disk.DiskAlertNotification().notify();
+        }
         binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

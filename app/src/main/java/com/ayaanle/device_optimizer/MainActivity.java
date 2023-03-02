@@ -37,13 +37,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    AlertDialog dialog;
-    ImageButton imgbtn1 , imgbtn2 , imgbtn3 , imgbtn4;
-    NotificationManager notificationManager;
-    public NotificationChannel notificationChannel;
-    Notification.Builder builder;
-    private final String description = "Test Notification";
-    private final String channelId = "i.apps.notification";
+    public ImageButton imgbtn1 , imgbtn2 , imgbtn3 , imgbtn4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,53 +70,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         imgbtn3.setOnClickListener(view ->
                 Toast.makeText(getApplicationContext() , "disk" , Toast.LENGTH_SHORT).show());
         imgbtn2.setOnClickListener(view ->
-                Intent intent = new Intent(getApplicationContext() , NotifActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext() , 0 , intent , PendingIntent.FLAG_UPDATE_CURRENT);
-        RemoteViews contentView = new RemoteViews(getPackageName() , R.layout.activity_notif);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationChannel = new NotificationChannel(channelId , description , NotificationManager.IMPORTANCE_HIGH);
-            notificationChannel.enableLights(true);
-            notificationChannel.enableVibration(true);
-            notificationManager.createNotificationChannel(notificationChannel);
-            builder = new Notification.Builder(getApplicationContext(), channelId);
-            builder.setContent(contentView);
-            builder.setSmallIcon(R.drawable.notification);
-            builder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources() , R.drawable.ic_launcher_background));
-            builder.setContentIntent(pendingIntent);
-        }
-        else
-        {
-            builder = new Notification.Builder(getApplicationContext())
-                    .setContent(contentView)
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources() , R.drawable.ic_launcher_background))
-                    .setContentIntent(pendingIntent);
-        }
-        notificationManager.notify(1234 , builder.build());
-        Intent intent = new Intent(getApplicationContext() , NotifActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext() , 0 , intent , PendingIntent.FLAG_UPDATE_CURRENT);
-        RemoteViews contentView = new RemoteViews(getPackageName() , R.layout.activity_notif);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationChannel = new NotificationChannel(channelId , description , NotificationManager.IMPORTANCE_HIGH);
-            notificationChannel.enableLights(true);
-            notificationChannel.enableVibration(true);
-            notificationManager.createNotificationChannel(notificationChannel);
-            builder = new Notification.Builder(getApplicationContext(), channelId);
-            builder.setContent(contentView);
-            builder.setSmallIcon(R.drawable.notification);
-            builder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources() , R.drawable.ic_launcher_background));
-            builder.setContentIntent(pendingIntent);
-        }
-        else
-        {
-            builder = new Notification.Builder(getApplicationContext())
-                    .setContent(contentView)
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources() , R.drawable.ic_launcher_background))
-                    .setContentIntent(pendingIntent);
-        }
-        notificationManager.notify(1234 , builder.build());
-                Toast.makeText(getApplicationContext() , "battery" , Toast.LENGTH_SHORT).show());
+                Toast.makeText(getApplicationContext() , "Disk Info and Optimization" , Toast.LENGTH_SHORT).show();
         imgbtn1.setOnClickListener(view ->
                 Toast.makeText(getApplicationContext() , "Wifi" , Toast.LENGTH_SHORT).show());
     }
