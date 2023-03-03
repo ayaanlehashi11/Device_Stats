@@ -4,7 +4,11 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityDiagnosticsManager;
+import android.net.IpConfiguration;
+import android.net.MacAddress;
 import android.net.Network;
+import android.net.StaticIpConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.RouteInfo;
 import android.net.wifi.WifiManager;
@@ -16,10 +20,14 @@ import android.telephony.TelephonyManager;
 import android.net.LinkProperties;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.annotation.RequiresPermission;
 import androidx.core.app.ActivityCompat;
 
 import java.net.InetAddress;
+import java.util.Collections;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
@@ -33,10 +41,12 @@ public class Internet {
     int ip;
     float frequency;
     WifiInfo wifi_info;
-    String mac_address, bssid, ip_address;
+    String mac_address, host_address, bssid, ip_address , host_name;
     String sim_operator_name;
     String sim_number , sim_country , strphoneType;
     int sim_id;
+    IpConfiguration ipConfiguration;
+    IpConfiguration.Builder builder;
     SignalStrength signalStrength;
     WifiManager wifiManager;
     Context context;
@@ -47,7 +57,7 @@ public class Internet {
 
         wifi_manager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (wifi_manager.isWifiEnabled()) {
-            _wifi_info = wifi_manager.getConnectionInfo()
+            _wifi_info = wifi_manager.getConnectionInfo();
             ip = _wifi_info.getIpAddress();
             frequency = _wifi_info.getFrequency();
             if (ActivityCompat.checkSelfPermission(context.getApplicationContext(),
@@ -67,15 +77,24 @@ public class Internet {
         }
 
     }
+    public synchronized static double network_diagnostics()
+    {
 
+    }
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @NonNull
     public int WifiSuggestionFunc() {
-        WifiNetworkSuggestion wifi_suggestion = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (wifi_suggestion.isMetered()) {
+        WifiNetworkSuggestion.Builder builder = new WifiNetworkSuggestion.Builder();
+        WifiNetworkSuggestion wifiNetworkSuggestion = builder.build();
+        if (Build.VERSION.SDK_INT >= 33) {
+            if(wifiNetworkSuggestion.isMetered() && wifiNetworkSuggestion.isRestricted() || wifiNetworkSuggestion.isUntrusted())
+            {
+                MacAddress wifi_mac_address = wifiNetworkSuggestion.getBssid();
 
             }
         }
-    }
+        return 1;
+        }
 
     public void dns_selection() {
         List<InetAddress> dns_addresses = link_properties.getDnsServers();
@@ -116,20 +135,32 @@ public class Internet {
         }
         return "Null";
     }
-    public void static_ipconfig()
+    @RequiresApi(api = 33)
+    @Nullable
+    public void static_ipconfig(String ip_address)
     {
-
+        builder = new IpConfiguration.Builder();
+        ipConfiguration = builder.build();
+        StaticIpConfiguration static_ip_config = ipConfiguration.getStaticIpConfiguration();
+        static_ip_config.
     }
-
     /**
      *
      * @param _route_info
      * @return
      */
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public InetAddress getDhcpServerAddress(RouteInfo _route_info)
+    public String[] dhcp_dns_config(InetAddress dhcp_addresses)
     {
-        List<InetAddress> dhcp_Address = link_properties.getDhcpServerAddress();
+        link_properties = new LinkProperties();
+        dhcp_addresses = link_properties.getDhcpServerAddress();
+        List<InetAddress>dns_addresses = link_properties.getDnsServers();
+        for(int i = 0;i < dns_addresses.size();++i)
+        {
+            host_name = dns_addresses.get(i).getHostName();
+            host_address = dns_addresses.get(i).getHostAddress();
+        }
+        return new String[]{host_address , host_name};
     }
     public WifiInfo wifi_info()
     {

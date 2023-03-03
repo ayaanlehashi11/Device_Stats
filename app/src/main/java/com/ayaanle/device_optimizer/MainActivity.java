@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         Toolbar tool_bar = (Toolbar)findViewById(R.id.toolbar);
+        tool_bar.setTitle("Device Optimizer");
+        setSupportActionBar(tool_bar);
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

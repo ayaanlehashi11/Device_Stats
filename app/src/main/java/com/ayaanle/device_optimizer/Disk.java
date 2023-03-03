@@ -93,34 +93,8 @@ public class Disk implements AlarmManager.OnAlarmListener , DialogInterface.OnCl
         String chech_if_removable = removable ? "is removable":"is not removable";
         return 0;
     }
-    public  NotificationManager DiskAlertNotification()
-    {
-        Intent intent = new Intent(context.getApplicationContext() , NotifActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context.getApplicationContext() , 0 , intent , PendingIntent.FLAG_UPDATE_CURRENT);
-        RemoteViews contentView = new RemoteViews(context.getPackageName() , R.layout.activity_main);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationChannel = new NotificationChannel(channelId , description , NotificationManager.IMPORTANCE_HIGH);
-            notificationChannel.enableLights(true);
-            notificationChannel.enableVibration(true);
-            notificationManager.createNotificationChannel(notificationChannel);
-            builder = new Notification.Builder(context.getApplicationContext(), channelId);
-            builder.setContent(contentView);
-            builder.setSmallIcon(R.drawable.notification);
-            builder.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources() , R.drawable.ic_launcher_background));
-            builder.setContentIntent(pendingIntent);
-        }
-        else
-        {
-            builder = new Notification.Builder(getApplicationContext())
-                    .setContent(contentView)
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources() , R.drawable.ic_launcher_background))
-                    .setContentIntent(pendingIntent);
-        }
-    }
-    public AlertDialog DiskDialog()
-    {
-        return new AlertDialog();
+    public  NotificationManager DiskAlertNotification() {
+
     }
 
     @Override
