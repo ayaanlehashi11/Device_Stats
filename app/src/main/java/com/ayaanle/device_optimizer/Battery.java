@@ -9,11 +9,8 @@ import android.os.BatteryManager;
 import android.os.PowerManager;
 import android.os.PowerManager.OnThermalStatusChangedListener;
 import android.hardware.BatteryState;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.hardware.SensorAdditionalInfo;
+import com.ayaanle.device_optimizer.Device_Temperature;
+import com.ayaanle.device_optimizer.Utils;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -22,17 +19,16 @@ import java.time.Duration;
 
 @RequiresApi(api = Build.VERSION_CODES.Q)
 public class Battery implements OnThermalStatusChangedListener, AlarmManager.OnAlarmListener {
-    Context context;
     PowerManager power_manager;
     Duration battery_life_prediction;
+    boolean is_charging , is_full;
     BatteryState batteryState;
     {
         assert false;
-        power_manager = (PowerManager) context.getApplicationContext().getSystemService(Context.POWER_SERVICE);
     }
 
-    public Battery(){
-
+    public Battery(Context context){
+        power_manager = (PowerManager) context.getApplicationContext().getSystemService(Context.POWER
     }
 
     /**
@@ -53,8 +49,8 @@ public class Battery implements OnThermalStatusChangedListener, AlarmManager.OnA
 
     /**
      *
-     * @param temperature
-     * @param battery_life
+     * @param temperature: the temperature of the battery
+     * @param battery_life: the expected life of the battery if such an usage is kept constant
      * @return
      */
     @SuppressLint("NewApi")

@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
+import android.os.StatFs;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -32,7 +33,9 @@ public class Disk implements AlarmManager.OnAlarmListener , DialogInterface.OnCl
     Notification.Builder builder;
     private final String description = "Test Notification";
     private final String channelId = "i.apps.notification";
-    long free_space , total_space , usable_space;
+    boolean is_removable , is_directory , is_external_storage_removable;
+    long free_space , total_space , used_space;
+    long free_bytes , used_bytes , total_bytes;
     String [] paths;
     StorageManager storage_manager = (StorageManager)context.getSystemService(Context.STORAGE_SERVICE);
     StorageVolume volume = storage_manager.getPrimaryStorageVolume();
@@ -70,7 +73,13 @@ public class Disk implements AlarmManager.OnAlarmListener , DialogInterface.OnCl
     }
     public String disk_info()
     {
-        String root;
+        File root_path = Environment.getRootDirectory();
+        if(!(root_path.isHidden())&&root_path.exists()&&root_path.isDirectory()){
+            StatFs fs_stat = new StatFs(root_path.getPath());
+            free_bytes = fs_stat.getFreeBytes();
+            total_bytes = fs_stat.getTotalBytes();
+            used_bytes = total_bytes - free_bytes;
+        }
 
     }
     public String[] absolute_paths(List<String>abs_paths , boolean encrypted)
@@ -79,7 +88,7 @@ public class Disk implements AlarmManager.OnAlarmListener , DialogInterface.OnCl
         for(int i = 0; i <list_volumes.size();++i)
         {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                String media_storage = list_volumes.get(i).getMediaStoreVolumeName();
+                if(list_volumes.get(i).isRemovable() && !(list_volumes.get(i).isPrimary()))is_removable=true;
             }
             paths[i] = String.valueOf(list_volumes.get(i));
 
@@ -89,7 +98,7 @@ public class Disk implements AlarmManager.OnAlarmListener , DialogInterface.OnCl
     @SuppressLint("UsableSpace")
     public int getNumberOfPartitions()
     {
-        removable = Environment.isExternalStorageRemovable(Environment.getRootDirectory());
+        is_external_storage_removable = Environment.isExternalStorageRemovable(Environment.getRootDirectory());
         String chech_if_removable = removable ? "is removable":"is not removable";
         return 0;
     }

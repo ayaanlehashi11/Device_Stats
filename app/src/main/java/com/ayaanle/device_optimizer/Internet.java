@@ -142,7 +142,6 @@ public class Internet {
         builder = new IpConfiguration.Builder();
         ipConfiguration = builder.build();
         StaticIpConfiguration static_ip_config = ipConfiguration.getStaticIpConfiguration();
-        static_ip_config.
     }
     /**
      *
